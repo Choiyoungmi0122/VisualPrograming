@@ -111,30 +111,56 @@ namespace TP
         private void button2_Click(object sender, EventArgs e)
         {
             dataview();     //중복 색칠 방지를 위해
-            String standard = comboBox1.Text;   //combobox로 가지고 오기
-            String keyword = textBox1.Text;//Textbox에 입력된 메시지를 keyword 저장
+            string standard = comboBox1.Text;   //combobox로 가지고 오기
+            string keyword = textBox1.Text;//textbox에 입력된 메시지를 keyword 저장
             //카테고리 값
             object ca = comboBox1.SelectedItem;
-            string be = Convert.ToString(ca);
+            string be = ca.ToString();
 
-            DataTable dt = (DataTable)dataGridView1.DataSource; ///전부를 받아옴
-            DataTable cate = (DataTable)dataGridView1.DataSource; ///전부를 받아옴
+            DataTable dt = (DataTable)dataGridView1.DataSource;
             // MessageBox.Show(dt.Columns[3].ToString());       제품명 나옴
+            DataTable cate = (DataTable)dataGridView1.DataSource;
 
+            DataRow[] dr = cate.Select($"{standard} = '{keyword}'");   //제품명에서 비교
+            int i = dt.Rows.IndexOf(dr[0]);     //찾은 배열의 특정컬럼으로뽑기
 
-            DataRow[] dr = cate.Select($"{standard} = '{keyword}'"); //제품명에서 비교
-
-            for (int i = 0; i < dr.Length; i++)
+           
+            foreach (DataRow _dr in dr)
             {
-                int indexRow = dt.Rows.IndexOf(dr[i]);
-                dataGridView1.Rows[indexRow % dr.Length].DefaultCellStyle.BackColor = Color.Yellow;
+                //int test = (int)_dr[0];
+                //MessageBox.Show(_dr[0] + ":" )
+                dataGridView1.Rows[i % 3].DefaultCellStyle.BackColor = Color.Yellow;  //색칠
             }
 
-            for (int i = 0; i < dr.Length; i++)
-            {
-                int indexRow = dt.Rows.IndexOf(dr[i]);
-                dataGridView1.Rows[indexRow % dr.Length].DefaultCellStyle.BackColor = Color.Yellow;
-            }
+            
+
+            //DataTable dt = (DataTable)dataGridView1.DataSource; ///전부를 받아옴
+            //DataTable cate = (DataTable)dataGridView1.DataSource; ///전부를 받아옴
+            //// MessageBox.Show(dt.Columns[3].ToString());       제품명 나옴
+
+
+            //DataRow[] dr = cate.Select($"{standard} = '{keyword}'"); //제품명에서 비교
+            //MessageBox.Show(dr[1].ToString());
+            //int i = dt.Rows.IndexOf(dr[0]);
+
+            //foreach (DataRow _dr in dr)
+            //{
+            //    //int test = (int)_dr[0];
+            //    //MessageBox.Show(_dr[0] + ":" )
+            //    dataGridView1.Rows[i % 3].DefaultCellStyle.BackColor = Color.Yellow;  //색칠
+            //}
+
+            //for (int i = 0; i < dr.Length; i++)
+            //{
+            //    int indexRow = dt.Rows.IndexOf(dr[i]);
+            //    dataGridView1.Rows[indexRow % dr.Length].DefaultCellStyle.BackColor = Color.Yellow;
+            //}
+
+            //for (int i = 0; i < dr.Length; i++)
+            //{
+            //    int indexRow = dt.Rows.IndexOf(dr[i]);
+            //    dataGridView1.Rows[indexRow % dr.Length].DefaultCellStyle.BackColor = Color.Yellow;
+            //}
 
 
         }
