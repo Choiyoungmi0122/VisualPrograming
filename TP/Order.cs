@@ -4,18 +4,24 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using Oracle.ManagedDataAccess;
 using Oracle.ManagedDataAccess.Client;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace TP
 {
+
     public partial class Order : Form
     {
         private string DB_Server_Info = "Data Source = localhost;" +
-           "User ID = system; Password = 1;";
+           "User ID = system; Password = 1228;";
         private string categori = "음료";
 
         public Order()
@@ -40,6 +46,7 @@ namespace TP
                 dataGridView1.Columns.Clear();
 
                 dt.DefaultView.RowFilter = $"카테고리 ='{categori}'";
+                DataRow[] ca = dt.Select($"카테고리 ='{categori}'");    //카테고리별 테이블 생성
                 dataGridView1.AllowUserToAddRows = false; //빈레코드 표시x
                 var chkCol = new DataGridViewCheckBoxColumn
                 {
@@ -70,12 +77,66 @@ namespace TP
             {
                 MessageBox.Show(ex.Message);
             }
+
+        }
+
+        //카테고리 선택시
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            DataTable dt = (DataTable)dataGridView1.DataSource; ///전부를 받아옴
+
+            if (radioButton1.Checked == true)
+            {
+                categori = radioButton1.Text;
+                dataview();//카테고리 선택시마다 새로운 테이블 생성
+                DataRow[] cate = dt.Select($"카테고리 ='{categori}'");
+
+
+            }
+            else if (radioButton2.Checked == true)
+            {
+                categori = radioButton2.Text;
+                dataview();
+                DataRow[] cate = dt.Select($"카테고리 ='{categori}'");
+            }
+            else
+            {
+                categori = radioButton3.Text;
+                dataview();
+                DataRow[] cate = dt.Select($"카테고리 ='{categori}'");
+            }
         }
         
-       
+        //검색시 표시
         private void button2_Click(object sender, EventArgs e)
         {
-            //검색부분
+            dataview();     //중복 색칠 방지를 위해
+            String standard = comboBox1.Text;   //combobox로 가지고 오기
+            String keyword = textBox1.Text;//Textbox에 입력된 메시지를 keyword 저장
+            //카테고리 값
+            object ca = comboBox1.SelectedItem;
+            string be = Convert.ToString(ca);
+
+            DataTable dt = (DataTable)dataGridView1.DataSource; ///전부를 받아옴
+            DataTable cate = (DataTable)dataGridView1.DataSource; ///전부를 받아옴
+            // MessageBox.Show(dt.Columns[3].ToString());       제품명 나옴
+
+
+            DataRow[] dr = cate.Select($"{standard} = '{keyword}'"); //제품명에서 비교
+
+            for (int i = 0; i < dr.Length; i++)
+            {
+                int indexRow = dt.Rows.IndexOf(dr[i]);
+                dataGridView1.Rows[indexRow % dr.Length].DefaultCellStyle.BackColor = Color.Yellow;
+            }
+
+            for (int i = 0; i < dr.Length; i++)
+            {
+                int indexRow = dt.Rows.IndexOf(dr[i]);
+                dataGridView1.Rows[indexRow % dr.Length].DefaultCellStyle.BackColor = Color.Yellow;
+            }
+
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -89,24 +150,9 @@ namespace TP
             MessageBox.Show("저장하시겠습니까?"); //예,아니요,취소 부분 되게 
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {   
-            if (radioButton1.Checked == true)
-            {
-                categori = radioButton1.Text;               
-                dataview();
-                
-            }
-            else if (radioButton2.Checked == true)
-            {
-                categori = radioButton2.Text;
-                dataview();
-            }
-            else
-            {
-                categori = radioButton3.Text;    
-                dataview();
-            }
-        }
+
+        
+
+        
     }
 }

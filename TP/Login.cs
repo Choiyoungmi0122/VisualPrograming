@@ -16,7 +16,7 @@ namespace TP
     {
         Main main;
         private string DB_Server_Info = "Data Source = localhost;" +
-           "User ID = system; Password = 1;";
+           "User ID = system; Password = 1228;";
 
 
         public bool test = false;
@@ -67,6 +67,7 @@ namespace TP
             }
         }
 
+        private int ls = 0;
         private void button1_Click(object sender, EventArgs e)
         {
             DataSet ds = new DataSet();
@@ -76,10 +77,10 @@ namespace TP
             conn.Open();
             string id = textBox1.Text;
             string pw = textBox2.Text;
-            string strSelect = "SELECT * from 회원 where 회원아이디 = " +$"'{id}'";
+            string strSelect = "SELECT * from 회원 where 회원아이디 = " + $"'{id}'";
             OracleCommand cmd = new OracleCommand(sqltxt, conn);
             OracleDataReader reader = cmd.ExecuteReader();
-            
+
 
             if (reader.Read())
             {
@@ -93,6 +94,7 @@ namespace TP
                 {
                     if (db_pw == pw)
                     {
+                        ls = 1;
                         MessageBox.Show("로그인에 성공했습니다.");
                         this.Close();
                     }
@@ -102,17 +104,18 @@ namespace TP
                     }
                 }
                 else
-                {                 
+                {
                     MessageBox.Show("사용자 정보가 없습니다.");
                 }
             }
-          
+
             conn.Close();
         }
 
         private void Login_FormClosing(object sender, FormClosingEventArgs e)
         {
-            main.Close();      
+            if (ls != 1) //로그인 성공하면 그냥 메인문도 닫히기 때문에 로그인 성공하지 못한상태에서 닫을시 메인문도 닫힘
+                main.Close();
         }
     }
 }
