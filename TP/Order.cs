@@ -113,17 +113,19 @@ namespace TP
             string standard = comboBox1.Text;   //combobox로 가지고 오기
             string keyword = textBox1.Text;//textbox에 입력된 메시지를 keyword 저장
             //카테고리 값
-            object ca = comboBox1.SelectedItem;
-            string be = ca.ToString();
-            MessageBox.Show(be);
 
             DataTable dt = (DataTable)dataGridView1.DataSource;
             // MessageBox.Show(dt.Columns[3].ToString());       제품명 나옴
             DataTable cate = (DataTable)dataGridView1.DataSource;
 
+           
             DataRow[] dr = cate.Select($"{standard} = '{keyword}'");   //제품명에서 비교
             //int i = dt.Rows.IndexOf(dr[0]);     //찾은 배열의 특정컬럼으로뽑기
 
+            foreach (DataRow row in cate.Rows)
+            {
+                string id = row["categori"].ToString();
+            }
 
             for (int i = 0; i < dr.Length; i++)
             {
