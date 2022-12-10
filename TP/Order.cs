@@ -91,7 +91,6 @@ namespace TP
                 dataview();//카테고리 선택시마다 새로운 테이블 생성
                 DataRow[] cate = dt.Select($"카테고리 ='{categori}'");
 
-
             }
             else if (radioButton2.Checked == true)
             {
@@ -128,7 +127,7 @@ namespace TP
             foreach (DataRow _dr in dr)
             {
                 //int test = (int)_dr[0];
-                //MessageBox.Show(_dr[0] + ":" )
+                MessageBox.Show(_dr[0] + ":");
                 dataGridView1.Rows[i % 3].DefaultCellStyle.BackColor = Color.Yellow;  //색칠
             }
 
