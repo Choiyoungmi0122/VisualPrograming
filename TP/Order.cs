@@ -89,7 +89,7 @@ namespace TP
             {
                 categori = radioButton1.Text;
                 dataview();
-
+                DataRow[] cate = dt.Select($"카테고리 ='{categori}'");
             }
             else if (radioButton2.Checked == true)
             {
@@ -111,17 +111,17 @@ namespace TP
             dataview();     //중복 색칠 방지를 위해
             string standard = comboBox1.Text;   //combobox로 가지고 오기
             string keyword = textBox1.Text;//textbox에 입력된 메시지를 keyword 저장
-            //카테고리 값
+            string ca = categori;   //카테고리 값
 
+            MessageBox.Show(ca);
 
-
-            DataTable dt = (DataTable)dataGridView1.DataSource;
+            DataTable cate = (DataTable)dataGridView1.DataSource;
             // MessageBox.Show(dt.Columns[3].ToString());       제품명 나옴
 
-            dt.DefaultView.RowFilter = $"카테고리 ='{categori}'";
+            cate.DefaultView.RowFilter = $"{ca} ='{categori}'";
             
-            DataRow[] dr = dt.Select($"{standard} = '{keyword}'");   //제품명에서 비교
-            int i = dt.Rows.IndexOf(dr[0]);     //찾은 배열의 특정컬럼으로뽑기
+            DataRow[] dr = cate.Select($"{standard} = '{keyword}'");   //제품명에서 비교
+            int i = cate.Rows.IndexOf(dr[0]);     //찾은 배열의 특정컬럼으로뽑기
 
             foreach (DataRow da in dr)
             {
