@@ -70,7 +70,7 @@ namespace TP
                 dataGridView1.Columns[5].ReadOnly = true;
                 dataGridView1.Columns[6].ReadOnly = true;
                 dataGridView1.Columns[7].ReadOnly = true;
-
+                 
                 conn.Close();
             }
             catch (OracleException ex)
@@ -80,42 +80,7 @@ namespace TP
 
         }
 
-        //카테고리 선택시
-        public void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            DataTable dt = (DataTable)dataGridView1.DataSource; ///전부를 받아옴
-
-            if (radioButton1.Checked == true)
-            {
-                categori = radioButton1.Text;
-                dataview();
-                //DataTable cate = dt.Select($"카테고리 ='{categori}'").CopyToDataTable();
-                //DataView dv = new DataView(cate);
-                //DataRow[] cate = dt.Select($"카테고리 ='{categori}'");
-                //DataTable cate = new DataTable();
-                //if(categori == dataGridView1.Columns[1])
-                //{
-
-                //}
-            }
-            else if (radioButton2.Checked == true)
-            {
-                categori = radioButton2.Text;
-                dataview();
-                //DataTable cate = dt.Select($"카테고리 ='{categori}'").CopyToDataTable();
-                //DataView dv = new DataView(cate);
-                //                DataRow[] cate = dt.Select($"카테고리 ='{categori}'");
-            }
-            else
-            {
-                categori = radioButton3.Text;
-                dataview();
-
-                //DataTable cate = dt.Select($"카테고리 ='{categori}'").CopyToDataTable();
-                //DataView dv = new DataView(cate);
-                //DataRow[] cate = dt.Select($"카테고리 ='{categori}'");
-            }
-        }
+        
         
         //검색시 표시
         private void button2_Click(object sender, EventArgs e)
@@ -152,9 +117,30 @@ namespace TP
             MessageBox.Show("저장하시겠습니까?"); //예,아니요,취소 부분 되게 
         }
 
+        //카테고리 선택시
+        public void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked == true)
+            {
+                categori = radioButton1.Text;
+                dataview();
+            }
+            else if (radioButton2.Checked == true)
+            {
+                categori = radioButton2.Text;
+                dataview();
+            }
+            else
+            {
+                categori = radioButton3.Text;
+                dataview();
 
-        
+            }
+        }
 
-        
+
+
+
+
     }
 }
