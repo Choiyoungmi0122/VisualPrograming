@@ -115,23 +115,31 @@ namespace TP
             //카테고리 값
             object ca = comboBox1.SelectedItem;
             string be = ca.ToString();
+            MessageBox.Show(be);
 
             DataTable dt = (DataTable)dataGridView1.DataSource;
             // MessageBox.Show(dt.Columns[3].ToString());       제품명 나옴
             DataTable cate = (DataTable)dataGridView1.DataSource;
 
             DataRow[] dr = cate.Select($"{standard} = '{keyword}'");   //제품명에서 비교
-            int i = dt.Rows.IndexOf(dr[0]);     //찾은 배열의 특정컬럼으로뽑기
+            //int i = dt.Rows.IndexOf(dr[0]);     //찾은 배열의 특정컬럼으로뽑기
 
-           
-            foreach (DataRow _dr in dr)
+
+            for (int i = 0; i < dr.Length; i++)
             {
-                //int test = (int)_dr[0];
-                MessageBox.Show(_dr[0] + ":");
-                dataGridView1.Rows[i % 3].DefaultCellStyle.BackColor = Color.Yellow;  //색칠
+                
+                MessageBox.Show(dr[i]["제품명"].ToString());
             }
 
-            
+
+            //foreach (DataRow _dr in dr)
+            //{
+            //    //int test = (int)_dr[0];
+            //    MessageBox.Show(_dr[0] + ":");
+            //    dataGridView1.Rows[i % 3].DefaultCellStyle.BackColor = Color.Yellow;  //색칠
+            //}
+
+
 
             //DataTable dt = (DataTable)dataGridView1.DataSource; ///전부를 받아옴
             //DataTable cate = (DataTable)dataGridView1.DataSource; ///전부를 받아옴
@@ -162,9 +170,24 @@ namespace TP
             //}
 
 
-        }
+            //String keyword = textBox1.Text;//Textbox에 입력된 메시지를 keyword 저장
 
-        private void button1_Click(object sender, EventArgs e)
+            //DataTable dt = (DataTable)dataGridView1.DataSource;
+            //// MessageBox.Show(dt.Columns[3].ToString());       제품명 나옴
+
+            //DataRow[] dr = dt.Select($"제품명 = '{keyword}'"); //제품명에서 비교
+            //int i = dt.Rows.IndexOf(dr[0]);     //찾은 배열의 특정컬럼으로뽑기
+
+            //foreach (DataRow _dr in dr)
+            //{
+            //    //int test = (int)_dr[0];
+            //    //MessageBox.Show(_dr[0] + ":" )
+            //}
+
+
+            }
+
+            private void button1_Click(object sender, EventArgs e)
         {
             //save 부분
         }
