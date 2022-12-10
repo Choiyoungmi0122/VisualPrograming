@@ -81,7 +81,7 @@ namespace TP
         }
 
         //카테고리 선택시
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        public void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             DataTable dt = (DataTable)dataGridView1.DataSource; ///전부를 받아옴
 
@@ -89,19 +89,31 @@ namespace TP
             {
                 categori = radioButton1.Text;
                 dataview();
-                DataRow[] cate = dt.Select($"카테고리 ='{categori}'");
+                //DataTable cate = dt.Select($"카테고리 ='{categori}'").CopyToDataTable();
+                //DataView dv = new DataView(cate);
+                //DataRow[] cate = dt.Select($"카테고리 ='{categori}'");
+                //DataTable cate = new DataTable();
+                //if(categori == dataGridView1.Columns[1])
+                //{
+
+                //}
             }
             else if (radioButton2.Checked == true)
             {
                 categori = radioButton2.Text;
                 dataview();
-                DataRow[] cate = dt.Select($"카테고리 ='{categori}'");
+                //DataTable cate = dt.Select($"카테고리 ='{categori}'").CopyToDataTable();
+                //DataView dv = new DataView(cate);
+                //                DataRow[] cate = dt.Select($"카테고리 ='{categori}'");
             }
             else
             {
                 categori = radioButton3.Text;
                 dataview();
-                DataRow[] cate = dt.Select($"카테고리 ='{categori}'");
+
+                //DataTable cate = dt.Select($"카테고리 ='{categori}'").CopyToDataTable();
+                //DataView dv = new DataView(cate);
+                //DataRow[] cate = dt.Select($"카테고리 ='{categori}'");
             }
         }
         
@@ -113,25 +125,23 @@ namespace TP
             string keyword = textBox1.Text;//textbox에 입력된 메시지를 keyword 저장
             string ca = categori;   //카테고리 값
 
-            MessageBox.Show(ca);
+            DataTable dt = (DataTable)dataGridView1.DataSource; ///전부를 받아옴
+            DataTable cate = dt.Select($"카테고리 ='{ca}'").CopyToDataTable();  //선택한 카테고리의 값만 넣는 테이블 생성
 
-            DataTable cate = (DataTable)dataGridView1.DataSource;
-            // MessageBox.Show(dt.Columns[3].ToString());       제품명 나옴
-
-            cate.DefaultView.RowFilter = $"{ca} ='{categori}'";
-            
-            DataRow[] dr = cate.Select($"{standard} = '{keyword}'");   //제품명에서 비교
-            int i = cate.Rows.IndexOf(dr[0]);     //찾은 배열의 특정컬럼으로뽑기
-
-            foreach (DataRow da in dr)
+            try
             {
-                dataGridView1.Rows[i%3].DefaultCellStyle.BackColor = Color.Yellow;
+                DataRow[] dr = cate.Select($"{standard} = '{keyword}'"); //제품명에서 비교
+                int i = cate.Rows.IndexOf(dr[0]);     //찾은 배열의 특정컬럼으로뽑기
+                dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;  //색칠
             }
-
+            catch
+            {
+                MessageBox.Show("없는 제품입니다.");
+            }
 
         }
 
-            private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             //save 부분
         }
