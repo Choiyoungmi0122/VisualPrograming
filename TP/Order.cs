@@ -99,7 +99,7 @@ namespace TP
                 int i = cate.Rows.IndexOf(dr[0]);     //찾은 배열의 특정컬럼으로뽑기
                 dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;  //색칠
             }
-            catch
+            catch   //없는 제품 입력시
             {
                 MessageBox.Show("없는 제품입니다.");
             }
