@@ -88,8 +88,7 @@ namespace TP
             if (radioButton1.Checked == true)
             {
                 categori = radioButton1.Text;
-                dataview();//카테고리 선택시마다 새로운 테이블 생성
-                DataRow[] cate = dt.Select($"카테고리 ='{categori}'");
+                dataview();
 
             }
             else if (radioButton2.Checked == true)
@@ -114,80 +113,23 @@ namespace TP
             string keyword = textBox1.Text;//textbox에 입력된 메시지를 keyword 저장
             //카테고리 값
 
+
+
             DataTable dt = (DataTable)dataGridView1.DataSource;
             // MessageBox.Show(dt.Columns[3].ToString());       제품명 나옴
-            DataTable cate = (DataTable)dataGridView1.DataSource;
 
-           
-            DataRow[] dr = cate.Select($"{standard} = '{keyword}'");   //제품명에서 비교
-            //int i = dt.Rows.IndexOf(dr[0]);     //찾은 배열의 특정컬럼으로뽑기
+            dt.DefaultView.RowFilter = $"카테고리 ='{categori}'";
+            
+            DataRow[] dr = dt.Select($"{standard} = '{keyword}'");   //제품명에서 비교
+            int i = dt.Rows.IndexOf(dr[0]);     //찾은 배열의 특정컬럼으로뽑기
 
-            foreach (DataRow row in cate.Rows)
+            foreach (DataRow da in dr)
             {
-                string id = row["categori"].ToString();
-            }
-
-            for (int i = 0; i < dr.Length; i++)
-            {
-                
-                MessageBox.Show(dr[i]["제품명"].ToString());
+                dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
             }
 
 
-            //foreach (DataRow _dr in dr)
-            //{
-            //    //int test = (int)_dr[0];
-            //    MessageBox.Show(_dr[0] + ":");
-            //    dataGridView1.Rows[i % 3].DefaultCellStyle.BackColor = Color.Yellow;  //색칠
-            //}
-
-
-
-            //DataTable dt = (DataTable)dataGridView1.DataSource; ///전부를 받아옴
-            //DataTable cate = (DataTable)dataGridView1.DataSource; ///전부를 받아옴
-            //// MessageBox.Show(dt.Columns[3].ToString());       제품명 나옴
-
-
-            //DataRow[] dr = cate.Select($"{standard} = '{keyword}'"); //제품명에서 비교
-            //MessageBox.Show(dr[1].ToString());
-            //int i = dt.Rows.IndexOf(dr[0]);
-
-            //foreach (DataRow _dr in dr)
-            //{
-            //    //int test = (int)_dr[0];
-            //    //MessageBox.Show(_dr[0] + ":" )
-            //    dataGridView1.Rows[i % 3].DefaultCellStyle.BackColor = Color.Yellow;  //색칠
-            //}
-
-            //for (int i = 0; i < dr.Length; i++)
-            //{
-            //    int indexRow = dt.Rows.IndexOf(dr[i]);
-            //    dataGridView1.Rows[indexRow % dr.Length].DefaultCellStyle.BackColor = Color.Yellow;
-            //}
-
-            //for (int i = 0; i < dr.Length; i++)
-            //{
-            //    int indexRow = dt.Rows.IndexOf(dr[i]);
-            //    dataGridView1.Rows[indexRow % dr.Length].DefaultCellStyle.BackColor = Color.Yellow;
-            //}
-
-
-            //String keyword = textBox1.Text;//Textbox에 입력된 메시지를 keyword 저장
-
-            //DataTable dt = (DataTable)dataGridView1.DataSource;
-            //// MessageBox.Show(dt.Columns[3].ToString());       제품명 나옴
-
-            //DataRow[] dr = dt.Select($"제품명 = '{keyword}'"); //제품명에서 비교
-            //int i = dt.Rows.IndexOf(dr[0]);     //찾은 배열의 특정컬럼으로뽑기
-
-            //foreach (DataRow _dr in dr)
-            //{
-            //    //int test = (int)_dr[0];
-            //    //MessageBox.Show(_dr[0] + ":" )
-            //}
-
-
-            }
+        }
 
             private void button1_Click(object sender, EventArgs e)
         {
