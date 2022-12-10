@@ -125,7 +125,7 @@ namespace TP
 
             foreach (DataRow da in dr)
             {
-                dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
+                dataGridView1.Rows[i%3].DefaultCellStyle.BackColor = Color.Yellow;
             }
 
 
