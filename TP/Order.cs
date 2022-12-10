@@ -80,8 +80,6 @@ namespace TP
 
         }
 
-        
-        
         //검색시 표시
         private void button2_Click(object sender, EventArgs e)
         {
@@ -106,6 +104,7 @@ namespace TP
 
         }
 
+        //save
         private void button1_Click(object sender, EventArgs e)
         {
             //save 부분
